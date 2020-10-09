@@ -3,31 +3,36 @@
 	include_once "conection.php";
 
 	if (isset($_POST['action'])) {
-		$userCtl = new UserController();
-		switch($_POST['action']) {
-			case 'store':
-				$nombre = strip_tags($_POST['nombre']);
-				$actividad = strip_tags($_POST['actividad']);
-				$cantidad = strip_tags($_POST['cantidad']);
-				$email = strip_tags($_POST['email']);
-				
-				$userCtl->store($nombre,$actividad,$cantidad,$email);
-			break;
-			case 'update':
-				$nombre = strip_tags($_POST['nombre']);
-				$actividad = strip_tags($_POST['actividad']);
-				$cantidad = strip_tags($_POST['cantidad']);
-				$email = strip_tags($_POST['email']);
-				$id = strip_tags($_POST['id']);
-				
-				$userCtl->update($nombre,$actividad,$cantidad,$email,$id);
-			break;
-			case 'remove':
-				$id = strip_tags($_POST['id']);
-				
-				 echo json_encode($userCtl->remove($id));
-			break;
+		if($_SESSION['token'] == $_POST['token']) {
+			$userCtl = new UserController();
+			switch($_POST['action']) {
+				case 'store':
+					$nombre = strip_tags($_POST['nombre']);
+					$actividad = strip_tags($_POST['actividad']);
+					$cantidad = strip_tags($_POST['cantidad']);
+					$email = strip_tags($_POST['email']);
+					
+					$userCtl->store($nombre,$actividad,$cantidad,$email);
+				break;
+				case 'update':
+					$nombre = strip_tags($_POST['nombre']);
+					$actividad = strip_tags($_POST['actividad']);
+					$cantidad = strip_tags($_POST['cantidad']);
+					$email = strip_tags($_POST['email']);
+					$id = strip_tags($_POST['id']);
+					
+					$userCtl->update($nombre,$actividad,$cantidad,$email,$id);
+				break;
+				case 'remove':
+					$id = strip_tags($_POST['id']);
+					
+					echo json_encode($userCtl->remove($id));
+				break;
+			}
+		} else {
+			echo json_encode("Error"); //Controlador 
 		}
+		
 	}
 
 	class UserController{

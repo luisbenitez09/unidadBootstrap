@@ -1,0 +1,4 @@
+Options +FollowSymLinks -Multiviews
+RewriteEngine on
+
+RewriteRule ^user$ usrCtl.php

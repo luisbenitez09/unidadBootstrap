@@ -351,7 +351,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="usrCtl.php" method="POST" onsubmit="return validar(this)">
+        <form action="user" method="POST" onsubmit="return validar(this)">
           <div class="container">
             <div class="form-group">
               <label for="exampleInputEmail1">Nombre completo</label>
@@ -405,6 +405,7 @@
             <button type="submit" class="btn btn-primary" id="btn">Reservar</button>
             <input type="hidden" name="action" id="action" value="store">
             <input type="hidden" name="id" id="id" value="">
+            <input type="hidden" name="token"  value="<?= $_SESSION['token']?>">
 
           </div>
         </div>
@@ -470,10 +471,10 @@
           });
 
           $.ajax({
-            url: 'usrCtl.php',
+            url: 'user',
             type: 'POST',
             dataType: 'json',
-            data: {id: id, action: 'remove'},
+            data: {id: id, action: 'remove', token: '<?= $_SESSION['token'] ?>'},
             success: function(json) {
               if (json.status == 'success') {
                 swal("Reserva eliminada.", {
